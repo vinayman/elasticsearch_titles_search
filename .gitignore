@@ -1,0 +1,64 @@
+#####################
+#  Python Compiled   #
+#####################
+*.pyc
+nosetests.xml
+.coverage
+*.swp
+tests.xml
+func_tests.xml
+.noseids
+__pycache__
+.mypy_cache/
+.pytest_cache/
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+# Auto Virtual Env.
+.env
+venv/
+.venv/
+
+.idea
+.vscode
+.devcontainer
+*.code-workspace
+armoniavenv
+
+
+#Compass files
+screen.css
+screen.css.map
+.sass-cache
+
+# Vagrant files
+.vagrant
+Vagrantfile
+
+# Log files
+log
+
+# local archive path
+test_storage
+MagicMock
+
+# ctags
+tags
+
+# build documentation
+build/
+
+# static generated files
+/static/
+
+# Local docker-compose
+docker-compose.override.yml

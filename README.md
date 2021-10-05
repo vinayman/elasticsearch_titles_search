@@ -67,6 +67,16 @@ export FLASK_DEBUG=1
 export FLASK_APP=./dashboard/app.py
 ```
 
+### Start the application ###
+
+If using pipenv as package manager:
+
+`make pipenvrun`
+
+If using virtualenv:
+
+`make run`
+
 Now you should be able to access the application at:
 
 `http://127.0.0.1:5000/`
