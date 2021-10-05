@@ -1,0 +1,14 @@
+version: "2.4"
+services:
+    elasticsearch:
+        container_name: es-container
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.14.1
+        hostname: es-container
+        ports:
+          - 9700:9200
+        environment:
+          - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+          - xpack.security.enabled=false
+          - discovery.type=single-node
+        volumes:
+          - ./elasticsearch/master/data:/usr/share/elasticsearch/data

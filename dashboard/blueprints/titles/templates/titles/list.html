@@ -1,0 +1,137 @@
+{% extends 'dashboard/show.html' %}
+
+{% block content %}
+
+<section class="content-header">
+    <h1>
+        Titles
+    </h1>
+</section>
+
+<section class="content">
+
+    <form id="search-form" class="form" method="get"
+          action="{{ url_for('titles.list') }}">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Search titles</h3>
+            </div>
+            <div class="box-body">
+                <div class="form-group col-md-11 ui-widget">
+                    <input id="q" name="q" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary col-md-1"
+                        id="search">Search
+                </button>
+                <div class="col-md-2 form-group-lg">
+                    <label>Select as you type</label>
+                    <input type="checkbox" name="autocomplete"
+                           id="autocomplete">
+                </div>
+            </div>
+        </div>
+
+        <div class="box box-default {{ '' if form.title.data else 'collapsed-box'}}">
+            <div class="box-header with-border">
+                <h3 class="box-title">Advanced search</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool"
+                            data-widget="collapse"><i class="fa fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="form-group">
+                    {{ form.title.label }}
+                    {{ form.title(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Results</h3>
+        </div>
+        <div class="box-body">
+            {% if not titles %}
+            <div class="alert alert-warning col-md-12">
+                No title were found :(
+            </div>
+            {% else %}
+            <div class="alert alert-info col-md-12">
+                {{ titles_total | commify }} titles found
+            </div>
+            {% endif %}
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for title in titles %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('titles.show', title_id=title.title_id) }}">{{title.titles[0]}}</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <section id="search-results-pagination">
+                <div>
+                    {% from 'dashboard/macros.html' import paginate %}
+                    {{ paginate(pagination, 'titles.list', form) }}
+                </div>
+            </section>
+        </div>
+    </div>
+
+</section>
+
+{% endblock content %}
+
+{% block page_script %}
+
+<script>
+    $(function () {
+        $("#q").autocomplete({
+                source: function (request, response) {
+                    var checkBox = document.getElementById("autocomplete");
+                    if (checkBox.checked == true) {
+                        let result_names = [];
+                        $.ajax({
+                            async: false,
+                            url: '{{ url_for('titles.suggest') }}',
+                            dataType: "json",
+                            data: {
+                                q: request.term
+                            },
+                            success: function (data) {
+                                result_names = data.results.map(item => ({
+                                    label: item.text,
+                                    value: item.text,
+                                    id: item.id
+                                }));
+                                response(result_names);
+                            }
+                        });
+                        return result_names;
+                    }
+                },
+                select: function (event, ui) {
+                    location.href = '{{ url_for('titles.show', title_id='id') }}'.replace('id', ui.item.id);
+                },
+                minLength: 3,
+            }
+        );
+    });
+</script>
+
+{% endblock page_script %}

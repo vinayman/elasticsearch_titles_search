@@ -1,0 +1,16 @@
+[ws]
+protocol=http
+host=0.0.0.0
+port=3031
+workers=2
+threads=1
+logfile=
+debug=False
+
+[es]
+host=localhost
+port=9700
+index_name=titles
+
+[ui]
+pagination_per_page=15

@@ -1,0 +1,7 @@
+elasticsearch==7.14.1
+schematics==2.1.1
+black==21.9b0
+certifi==2021.5.30
+Flask==2.0.2
+Jinja2==3.0.1
+WTForms==2.3.3
