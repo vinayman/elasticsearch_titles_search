@@ -16,9 +16,7 @@ class ShowTitle(View):
         )
         titles, titles_total = reader.find_by_title_id(title_id=title_id)
         if titles_total["value"] > 1:
-            raise Exception(
-                f"More than one title under title id: {title_id}"
-            )
+            raise Exception(f"More than one title under title id: {title_id}")
         return render_template(
             "titles/show.html",
             title=titles[0],
